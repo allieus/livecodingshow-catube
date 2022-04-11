@@ -11,7 +11,7 @@ class TimezoneMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        tzname = request.session.get('django_timezone', 'Asia/Seoul')
+        tzname = request.session.get("django_timezone", "Asia/Seoul")
         if tzname:
             timezone.activate(zoneinfo.ZoneInfo(tzname))
         else:

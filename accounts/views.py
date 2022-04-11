@@ -14,7 +14,7 @@ from accounts.forms import ProfileForm
 
 class SignupView(CreateView):
     form_class = UserCreationForm
-    template_name = 'form.html'
+    template_name = "form.html"
     success_url = settings.LOGIN_URL
 
     def form_valid(self, form):
@@ -38,7 +38,9 @@ class MyLoginView(LoginView):
         else:
             welcome_message = f"{diff_minutes}분 만이네요. :-)"
 
-        messages.success(self.request, f"{form.get_user().username}님. {welcome_message}")
+        messages.success(
+            self.request, f"{form.get_user().username}님. {welcome_message}"
+        )
 
         return response
 
@@ -60,7 +62,7 @@ logout = MyLogoutView.as_view()
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    return render(request, "accounts/profile.html")
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
