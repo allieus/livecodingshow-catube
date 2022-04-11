@@ -38,7 +38,9 @@
                         <a href="{% url 'catube:video_new' %}" class="btn btn-outline-danger">업로드</a>
                         <a href="{% url 'logout' %}" class="btn btn-outline-success">로그아웃</a>
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-outline-danger">로그인</a>
+                        {% url 'login' as login_url %}
+                        <a href="{{ login_url }}{% if login_url != request.path %}?next={{ request.path }}{% endif %}"
+                           class="btn btn-outline-danger">로그인</a>
                         <a href="{% url 'signup' %}" class="btn btn-danger">회원가입</a>
                     {% endif %}
                 </div>
