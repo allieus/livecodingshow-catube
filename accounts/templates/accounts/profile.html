@@ -1,2 +1,26 @@
+{% extends "layout.html" %}
 
-<h2>{{ user }}'s Profile</h2>
+{% block content %}
+    <h2>{{ user }}'s Profile</h2>
+
+    <table class="table table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ user.last_name }} {{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Date joined</th>
+                <td>{{ user.date_joined }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

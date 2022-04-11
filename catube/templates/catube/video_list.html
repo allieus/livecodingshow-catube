@@ -4,31 +4,30 @@
 {% block content %}
     <div class="row">
         {% for video in video_list %}
-            <div class="col-3 mb-3">
+            <div class="col col-sm-6 col-md-4 col-lg-3 mb-3">
                 <div class="card">
-                    <img src="{{ video.photo.url }}" class="w-100" />
+                    <a href="{% url 'catube:video_detail' video.pk %}">
+                        <img src="{{ video.photo.url }}" class="w-100 card-img-top" />
+                    </a>
                     <div class="card-body">
-                        <a href="{% url 'catube:video_detail' video.pk %}" class="text-dark">
-                            <strong>{{ video.title }}</strong>
-                            <p class="small">
-                                {{ video.description|truncatechars:30 }}
-                            </p>
-                            <p class="text-gray small">
-                                {{ video.created_at|timesince }} 전,
+                        <h5 class="card-title">{{ video.title }}</h5>
+                        <p class="card-text">
+                            {{ video.description|truncatechars:30 }}
+                            <div class="text-gray small">
                                 조회수 : {{ video.view_count }}
-                            </p>
+                            </div>
+                        </p>
+                        <a href="{% url 'catube:video_detail' video.pk %}" class="btn btn-primary">
+                            영상 보기
                         </a>
+
                     </div>
-
                 </div>
-
             </div>
         {% endfor %}
     </div>
 
-
-    {% bootstrap_pagination page_obj %}
-
-    <hr/>
-    <a href="{% url 'catube:video_new' %}">업로드</a>
+    <div class="my-3">
+        {% bootstrap_pagination page_obj justify_content="center" %}
+    </div>
 {% endblock %}

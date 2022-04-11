@@ -1,7 +1,12 @@
+{% extends "layout.html" %}
 
-정말 삭제하시겠습니까?
+{% block content %}
+    <p class="alert alert-danger">
+        댓글을 정말 삭제하시겠습니까?
+    </p>
 
-<form action="" method="post" novalidate>
-    {% csrf_token %}
-    <input type="submit" value="Go!" />
-</form>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        <input type="submit" value="Go!" class="btn btn-danger" />
+    </form>
+{% endblock %}

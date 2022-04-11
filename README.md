@@ -21,7 +21,7 @@ cd livecodingshow-catube
 
 혹은 https://github.com/allieus/livecodingshow-catube/archive/master.zip 주소에서 다운받아 압축을 푸셔도 됩니다.
 
-명령프롬프트 혹은 파워쉘을 통해 manage.py가 있는 디렉토리 경로까지 이동하신 후에, 다음 명령으로 필요한 팩키지를 설치하실 수 있습니다. requirements.txt 파일에는 3개 라이브러리 (`django~=3.1`, `django-bootstrap4`, `pillow`)가 명시되어있습니다.
+명령프롬프트 혹은 파워쉘을 통해 manage.py가 있는 디렉토리 경로까지 이동하신 후에, 다음 명령으로 필요한 팩키지를 설치하실 수 있습니다. requirements.txt 파일에는 3개 라이브러리 (`django`, `django-bootstrap-v5`, `pillow`)가 명시되어있습니다.
 
 ```sh
 pip install -r requirements.txt
