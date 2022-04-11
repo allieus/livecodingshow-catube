@@ -5,9 +5,23 @@
     <video controls class="w-100">
         <source src="{{ video.file.url }}" />
     </video>
-    <h4>{{ video.title }}</h4>
 
-    작성자 : {{ video.author.email|default:video.author.username }}
+    <div class="d-flex justify-content-between pt-3">
+        <div>
+            <h4>{{ video.title }}</h4>
+            <div>조회수 : {{ video.view_count }}</div>
+        </div>
+        <div>
+            {% if user == video.author %}
+                <a href="{% url 'catube:video_edit' video.pk %}" class="btn btn-danger">수정</a>
+                <a href="{% url 'catube:video_delete' video.pk %}" class="btn btn-outline-danger">삭제</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr />
+
+    <h5>{{ video.author.email|default:video.author.username }}</h5>
     {{ video.description|linebreaks }}
 
     <p>
@@ -16,18 +30,9 @@
         {% endfor %}
     </p>
 
-    <p>
-        조회수 : {{ video.view_count }}
-    </p>
-
-    {% if user == video.author %}
-        <a href="{% url 'catube:video_edit' video.pk %}" class="btn btn-danger">수정</a>
-        <a href="{% url 'catube:video_delete' video.pk %}" class="btn btn-outline-danger">삭제</a>
-    {% endif %}
-
     <hr />
 
-    댓글 ({{ video.comment_set.all.count }})
+    <p>댓글 ({{ video.comment_set.all.count }})</p>
 
     <form action="{% url 'catube:comment_new' video.pk %}" method="post" novalidate>
         {% csrf_token %}

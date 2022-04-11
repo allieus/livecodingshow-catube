@@ -4,23 +4,23 @@
 {% block content %}
     <div class="row">
         {% for video in video_list %}
-            <div class="col col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                 <div class="card">
-                    <a href="{% url 'catube:video_detail' video.pk %}">
-                        <img src="{{ video.photo.url }}" class="w-100 card-img-top" />
+                    <a href="{% url 'catube:video_detail' video.pk %}" class="ratio ratio-16x9">
+                        <img src="{{ video.photo.url }}" class="img-fluid card-img-top"
+                             style="object-fit: cover;"
+                        />
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">{{ video.title }}</h5>
-                        <p class="card-text">
+                        <h5 class="card-title text-truncate">
+                            {{ video.title }}
+                        </h5>
+                        <p class="card-text text-truncate">
                             {{ video.description|truncatechars:30 }}
-                            <div class="text-gray small">
-                                조회수 : {{ video.view_count }}
-                            </div>
+                        <div class="text-gray small">
+                            조회수 : {{ video.view_count }}
+                        </div>
                         </p>
-                        <a href="{% url 'catube:video_detail' video.pk %}" class="btn btn-primary">
-                            영상 보기
-                        </a>
-
                     </div>
                 </div>
             </div>

@@ -4,3 +4,4 @@ __pycache__
 media
 .venv
 /temp
+.DS_Store
