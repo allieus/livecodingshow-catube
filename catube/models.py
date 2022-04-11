@@ -12,9 +12,10 @@ class Video(models.Model):
     view_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tag_set = models.ManyToManyField("Tag", blank=True)
 
     def get_absolute_url(self):
-        return reverse('catube:video_detail', args=[self.pk])
+        return reverse("catube:video_detail", args=[self.pk])
 
 
 class Comment(models.Model):
@@ -23,3 +24,10 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+# 직접 구현보다 django-taggit 라이브러리 좋습니다.
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=200, unique=True)

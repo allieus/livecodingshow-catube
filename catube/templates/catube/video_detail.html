@@ -11,6 +11,12 @@
     {{ video.description|linebreaks }}
 
     <p>
+        {% for tag in video.tag_set.all %}
+            <span class="badge bg-primary">{{ tag.name }}</span>
+        {% endfor %}
+    </p>
+
+    <p>
         조회수 : {{ video.view_count }}
     </p>
 
