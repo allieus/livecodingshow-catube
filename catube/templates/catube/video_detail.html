@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load bootstrap4 %}
+{% load bootstrap5 %}
 
 {% block content %}
     <video controls class="w-100">
@@ -19,7 +19,7 @@
 
     댓글 ({{ video.comment_set.all.count }})
 
-    <form action="{% url 'catube:comment_new' video.pk %}" method="post">
+    <form action="{% url 'catube:comment_new' video.pk %}" method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form comment_form layout="inline" %}
         <input type="submit" value="저장" class="btn btn-danger" />

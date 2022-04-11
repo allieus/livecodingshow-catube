@@ -1,3 +1,3 @@
 django~=4.0.0
-django-bootstrap4
-pillow
+django-bootstrap-v5~=1.0.0
+pillow~=9.1.0

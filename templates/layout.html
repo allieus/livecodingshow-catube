@@ -1,4 +1,4 @@
-{% load bootstrap4 %}
+{% load bootstrap5 %}
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,30 +6,42 @@
 
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     {% bootstrap_css %}
-    {% bootstrap_jquery %}
     {% bootstrap_javascript %}
 </head>
 <body>
     <div class="container">
-        <nav class="navbar">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <a href="{% url 'root' %}" class="navbar-brand">
-                <i class="fa fa-youtube-play text-danger mr-1"></i>
+                <i class="fa fa-youtube-play text-danger me-1"></i>
                 CATUBE
             </a>
 
-            <form action="{% url 'catube:video_list' %}" method="get" class="form-inline">
-                <input type="text" class="form-control mr-2" name="q" value="{{ request.GET.q }}" />
-                <input type="submit" value="검색" class="btn btn-danger" />
-            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <div>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'catube:video_new' %}" class="btn btn-danger">업로드</a>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-info">로그아웃</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline-danger">로그인</a>
-                    <a href="{% url 'signup' %}" class="btn btn-danger">회원가입</a>
-                {% endif %}
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                {% comment %}
+                <div class="navbar-nav mb-2 mb-lg-0">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </div>
+                {% endcomment %}
+
+                <form action="{% url 'catube:video_list' %}" method="get" class="d-flex m-0 my-4 my-lg-0 mx-auto" novalidate>
+                    <input type="text" class="form-control me-1" name="q" value="{{ request.GET.q }}" />
+                    <input type="submit" value="검색" class="btn btn-danger" />
+                </form>
+
+                <div class="navbar-nav gap-1">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'catube:video_new' %}" class="btn btn-outline-danger">업로드</a>
+                        <a href="{% url 'logout' %}" class="btn btn-outline-success">로그아웃</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-danger">로그인</a>
+                        <a href="{% url 'signup' %}" class="btn btn-danger">회원가입</a>
+                    {% endif %}
+                </div>
             </div>
         </nav>
 
@@ -40,7 +52,7 @@
             </div>
         </div>
 
-        &copy; 2020. Ask Company.
+        &copy; 2022. Ask Company.
     </div>
 </body>
 </html>
