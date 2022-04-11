@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import F
-from django.shortcuts import render, get_object_or_404, resolve_url
+from django.shortcuts import get_object_or_404, resolve_url
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, UpdateView, DetailView, CreateView
 from .models import Video, Comment
@@ -26,8 +27,10 @@ class VideoCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         video = form.save(commit=False)
-        video.author= self.request.user
-        return super().form_valid(form)
+        video.author = self.request.user
+        response = super().form_valid(form)
+        messages.success(self.request, "새로운 비디오를 저장했습니다. :D")
+        return response
 
 
 class VideoDetailView(DetailView):
@@ -52,6 +55,11 @@ class VideoUpdateView(UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user == self.get_object().author
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "비디오 변경내역을 저장했습니다. :D")
+        return response
+
 
 class VideoDeleteView(UserPassesTestMixin, DeleteView):
     model = Video
@@ -59,6 +67,11 @@ class VideoDeleteView(UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.request.user == self.get_object().author
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "지정 비디오를 삭제했습니다.")
+        return response
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -70,7 +83,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         comment = form.save(commit=False)
         comment.author = self.request.user
         comment.video = get_object_or_404(Video, pk=self.kwargs['video_pk'])
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, "새 댓글을 저장했습니다. ;-)")
+        return response
 
     def get_success_url(self):
         return resolve_url('catube:video_detail', self.kwargs['video_pk'])
@@ -84,3 +99,8 @@ class CommentDeleteView(UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return resolve_url('catube:video_detail', self.kwargs['video_pk'])
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "지정 댓글을 삭제했습니다.")
+        return response
