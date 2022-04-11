@@ -20,6 +20,9 @@ class VideoForm(forms.ModelForm):
             'file',
             'photo',
         ]
+        widgets = {
+            "file": forms.FileInput(attrs={"accept": "video/*"}),
+        }
 
 
 class CommentForm(forms.ModelForm):
