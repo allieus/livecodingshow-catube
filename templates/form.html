@@ -2,9 +2,15 @@
 {% load bootstrap5 %}
 
 {% block content %}
+    {% if form_title %}
+        <h3 class="mb-4">{{ form_title }}</h3>
+    {% endif %}
+
     <form action="" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type="submit" class="btn btn-danger" />
+        {% buttons %}
+            <input type="submit" class="btn btn-danger" />
+        {% endbuttons %}
     </form>
 {% endblock %}
