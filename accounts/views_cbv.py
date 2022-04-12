@@ -1,13 +1,13 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, TemplateView
 
 from accounts.forms import ProfileForm
+from accounts.mixins import LoginRequiredMixin
 
 
 class SignupView(CreateView):

@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import F, Exists, OuterRef
 from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.urls import reverse_lazy
@@ -11,6 +10,8 @@ from django.views.generic import (
     DetailView,
     CreateView,
 )
+
+from accounts.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Video, Comment
 from .forms import VideoForm, CommentForm
 
