@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load bootstrap5 %}
+{% load bootstrap5 humanize %}
 
 {% block content %}
     <div class="row">
@@ -16,11 +16,11 @@
                             {{ video.title }}
                         </h5>
                         <p class="card-text text-truncate">
-                            {{ video.description|truncatechars:30 }}
-                        <div class="text-gray small">
-                            조회수 : {{ video.view_count }}
-                        </div>
+                            {{ video.description|default:"&nbsp;"|truncatechars:30 }}
                         </p>
+                        <div class="text-gray small">
+                            조회수 {{ video.view_count|intcomma }}회
+                        </div>
                     </div>
                 </div>
             </div>

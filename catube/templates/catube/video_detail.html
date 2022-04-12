@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load bootstrap5 %}
+{% load bootstrap5 humanize %}
 
 {% block content %}
     <video controls class="w-100">
@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between pt-3">
         <div>
             <h4>{{ video.title }}</h4>
-            <div>조회수 : {{ video.view_count }}</div>
+            <div>조회수 {{ video.view_count|intcomma }}회</div>
         </div>
         <div>
             {% if user == video.author %}
