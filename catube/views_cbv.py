@@ -46,6 +46,9 @@ class VideoListView(ListView):
         return context_data
 
 
+video_list = VideoListView.as_view()
+
+
 class VideoCreateView(LoginRequiredMixin, CreateView):
     model = Video
     form_class = VideoForm
@@ -64,6 +67,9 @@ class VideoCreateView(LoginRequiredMixin, CreateView):
         return response
 
 
+video_new = VideoCreateView.as_view()
+
+
 class VideoDetailView(DetailView):
     model = Video
 
@@ -76,6 +82,9 @@ class VideoDetailView(DetailView):
         context_data = super().get_context_data(**kwargs)
         context_data["comment_form"] = CommentForm()
         return context_data
+
+
+video_detail = VideoDetailView.as_view()
 
 
 class VideoUpdateView(UserPassesTestMixin, UpdateView):
@@ -97,16 +106,7 @@ class VideoUpdateView(UserPassesTestMixin, UpdateView):
         return response
 
 
-class VideoLikeView(LoginRequiredMixin, DetailView):
-    model = Video
-
-    def get(self, request, *args, **kwargs):
-        video = self.get_object()
-        if self.kwargs["action"] == "like":
-            video.liked_user_set.add(request.user)
-        else:
-            video.liked_user_set.remove(request.user)
-        return redirect(video)
+video_edit = VideoUpdateView.as_view()
 
 
 class VideoDeleteView(UserPassesTestMixin, DeleteView):
@@ -120,6 +120,24 @@ class VideoDeleteView(UserPassesTestMixin, DeleteView):
         response = super().form_valid(form)
         messages.success(self.request, "지정 비디오를 삭제했습니다.")
         return response
+
+
+video_delete = VideoDeleteView.as_view()
+
+
+class VideoLikeView(LoginRequiredMixin, DetailView):
+    model = Video
+
+    def get(self, request, *args, **kwargs):
+        video = self.get_object()
+        if self.kwargs["action"] == "like":
+            video.liked_user_set.add(request.user)
+        else:
+            video.liked_user_set.remove(request.user)
+        return redirect(video)
+
+
+video_like = VideoLikeView.as_view()
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -139,6 +157,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return resolve_url("catube:video_detail", self.kwargs["video_pk"])
 
 
+comment_new = CommentCreateView.as_view()
+
+
 class CommentDeleteView(UserPassesTestMixin, DeleteView):
     model = Comment
 
@@ -152,3 +173,6 @@ class CommentDeleteView(UserPassesTestMixin, DeleteView):
         response = super().form_valid(form)
         messages.success(self.request, "지정 댓글을 삭제했습니다.")
         return response
+
+
+comment_delete = CommentDeleteView.as_view()

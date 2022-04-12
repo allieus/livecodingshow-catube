@@ -1,13 +1,11 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, TemplateView
 
 from accounts.forms import ProfileForm
 
@@ -63,9 +61,11 @@ class MyLogoutView(LogoutView):
 logout = MyLogoutView.as_view()
 
 
-@login_required
-def profile(request):
-    return render(request, "accounts/profile.html")
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "accounts/profile.html"
+
+
+profile = ProfileView.as_view()
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):

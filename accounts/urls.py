@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views_cbv as views
 
 urlpatterns = [
     path("signup/", views.signup, name="signup"),
