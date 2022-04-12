@@ -1,4 +1,5 @@
 import json
+import shutil
 from pathlib import Path
 from typing import List
 
@@ -74,3 +75,8 @@ class Command(BaseCommand):
                     tag_list.append(tag)
 
                 video.tag_set.set(tag_list)
+
+        line = input("다운받은 비디오 임시 폴더를 삭제하시겠습니까? (Y/n)").lower()
+        if line == "" or line.startswith("y"):
+            shutil.rmtree("./temp")
+            print("임시폴더를 삭제했습니다.")
