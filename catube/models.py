@@ -17,6 +17,9 @@ class Video(models.Model):
     def get_absolute_url(self):
         return reverse("catube:video_detail", args=[self.pk])
 
+    class Meta:
+        ordering = ["-id"]
+
 
 class Comment(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
@@ -24,6 +27,9 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["id"]
 
 
 # 직접 구현보다 django-taggit 라이브러리 좋습니다.
@@ -34,3 +40,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["name"]
