@@ -31,6 +31,11 @@ INSTALLED_APPS = [
     "catube",
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -41,6 +46,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "myproj.middleware.TimezoneMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ] + MIDDLEWARE
 
 ROOT_URLCONF = "myproj.urls"
 
@@ -128,3 +138,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/ko/4.0/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Django debug toolbar
+# https://django-debug-toolbar.readthedocs.io/
+
+INTERNAL_IPS = ["127.0.0.1"]
