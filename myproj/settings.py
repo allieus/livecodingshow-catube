@@ -76,6 +76,12 @@ DATABASES = {
 }
 
 
+# 커스텀 User 모델 대체하기
+# https://docs.djangoproject.com/ko/4.0/topics/auth/customizing/#substituting-a-custom-user-model
+
+AUTH_USER_MODEL = "accounts.User"
+
+
 # Password validation
 # https://docs.djangoproject.com/ko/4.0/ref/settings/#auth-password-validators
 
