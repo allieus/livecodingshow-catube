@@ -1,7 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import F
-from django.shortcuts import get_object_or_404, resolve_url
+from django.db.models import F, Exists, OuterRef
+from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -14,6 +15,9 @@ from .models import Video, Comment
 from .forms import VideoForm, CommentForm
 
 
+User = get_user_model()
+
+
 class VideoListView(ListView):
     model = Video
     paginate_by = 12
@@ -23,6 +27,13 @@ class VideoListView(ListView):
         q = self.request.GET.get("q", "").strip()
         if q:
             qs = qs.filter(title__icontains=q)
+
+        if self.request.user.is_authenticated:
+            subquery = User.objects.filter(
+                username=self.request.user.username, liked_video_set=OuterRef("pk")
+            )
+            qs = qs.annotate(is_liked=Exists(subquery))
+
         return qs
 
 
@@ -75,6 +86,18 @@ class VideoUpdateView(UserPassesTestMixin, UpdateView):
         response = super().form_valid(form)
         messages.success(self.request, "비디오 변경내역을 저장했습니다. :D")
         return response
+
+
+class VideoLikeView(LoginRequiredMixin, DetailView):
+    model = Video
+
+    def get(self, request, *args, **kwargs):
+        video = self.get_object()
+        if self.kwargs["action"] == "like":
+            video.liked_user_set.add(request.user)
+        else:
+            video.liked_user_set.remove(request.user)
+        return redirect(video)
 
 
 class VideoDeleteView(UserPassesTestMixin, DeleteView):

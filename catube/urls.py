@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -10,6 +10,11 @@ urlpatterns = [
     path("<int:pk>/", views.VideoDetailView.as_view(), name="video_detail"),
     path("<int:pk>/edit/", views.VideoUpdateView.as_view(), name="video_edit"),
     path("<int:pk>/delete", views.VideoDeleteView.as_view(), name="video_delete"),
+    re_path(
+        r"^(?P<pk>\d+)/(?P<action>(like|dislike))/$",
+        views.VideoLikeView.as_view(),
+        name="video_like",
+    ),
     path(
         "<int:video_pk>/comments/new/",
         views.CommentCreateView.as_view(),

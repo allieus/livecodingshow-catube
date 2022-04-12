@@ -13,6 +13,9 @@ class Video(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tag_set = models.ManyToManyField("Tag", blank=True)
+    liked_user_set = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="liked_video_set"
+    )
 
     def get_absolute_url(self):
         return reverse("catube:video_detail", args=[self.pk])

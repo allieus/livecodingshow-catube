@@ -18,8 +18,18 @@
                         <p class="card-text text-truncate">
                             {{ video.description|default:"&nbsp;"|truncatechars:30 }}
                         </p>
-                        <div class="text-gray small">
-                            조회수 {{ video.view_count|intcomma }}회
+
+                        <div class="d-flex align-content-center justify-content-between">
+                            <div class="text-gray small">
+                                조회수 {{ video.view_count|intcomma }}회
+                            </div>
+                            {% if request.user.is_authenticated %}
+                                {% if video.is_liked %}
+                                    <span class="fa fa-heart text-danger"></span>
+                                {% else %}
+                                    <span class="fa fa-heart-o text-secondary"></span>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
