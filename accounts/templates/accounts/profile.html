@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h2>{{ user }}'s Profile</h2>
+    <h2>{{ user }}의 프로필</h2>
 
     <table class="table table-bordered table-hover">
         <tbody>
@@ -16,6 +16,10 @@
             <tr>
                 <th>Name</th>
                 <td>{{ user.last_name }} {{ user.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Phone number</th>
+                <td>{{ user.profile.phone_number }}</td>
             </tr>
             <tr>
                 <th>Last login</th>
