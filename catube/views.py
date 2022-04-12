@@ -28,6 +28,9 @@ class VideoListView(ListView):
         if q:
             qs = qs.filter(title__icontains=q)
 
+        if "liked" in self.request.GET:
+            qs = qs.filter(liked_user_set=self.request.user)
+
         if self.request.user.is_authenticated:
             subquery = User.objects.filter(
                 username=self.request.user.username, liked_video_set=OuterRef("pk")
@@ -35,6 +38,12 @@ class VideoListView(ListView):
             qs = qs.annotate(is_liked=Exists(subquery))
 
         return qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(object_list=object_list, **kwargs)
+        if "liked" in self.request.GET:
+            context_data["bootstrap_pagination_extra"] = "liked=1"
+        return context_data
 
 
 class VideoCreateView(LoginRequiredMixin, CreateView):

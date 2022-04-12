@@ -22,11 +22,11 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                {% comment %}
                 <div class="navbar-nav mb-2 mb-lg-0">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a href="{% url 'catube:video_list' %}?liked" class="nav-link active" aria-current="page" href="#">
+                        내가 좋아하는 비디오
+                    </a>
                 </div>
-                {% endcomment %}
 
                 <form action="{% url 'catube:video_list' %}" method="get" class="d-flex m-0 my-4 my-lg-0 mx-auto" novalidate>
                     <input type="text" class="form-control me-1" name="q" value="{{ request.GET.q }}" />
