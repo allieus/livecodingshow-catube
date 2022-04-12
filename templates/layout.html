@@ -23,13 +23,14 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav mb-2 mb-lg-0">
-                    <a href="{% url 'catube:video_list' %}?liked" class="nav-link active" aria-current="page" href="#">
+                    <a href="{% url 'catube:video_list' %}?liked=1" class="nav-link active" aria-current="page" href="#">
                         내가 좋아하는 비디오
                     </a>
                 </div>
 
                 <form action="{% url 'catube:video_list' %}" method="get" class="d-flex m-0 my-4 my-lg-0 mx-auto" novalidate>
-                    <input type="text" class="form-control me-1" name="q" value="{{ request.GET.q }}" />
+                    <input type="text" class="form-control me-1" name="q" value="{{ q }}" />
+                    {% if is_filter_liked %}<input type="hidden" name="liked" value="1" />{% endif %}
                     <input type="submit" value="검색" class="btn btn-danger" />
                 </form>
 

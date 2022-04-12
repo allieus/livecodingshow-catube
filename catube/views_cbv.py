@@ -23,13 +23,29 @@ class VideoListView(ListView):
     model = Video
     paginate_by = 12
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bootstrap_pagination_extra_list = []
+        self.q = ""
+        self.is_filter_liked = False
+
+    def get(self, request, *args, **kwargs):
+        self.q = self.request.GET.get("q", "").strip()
+        if self.q:
+            self.bootstrap_pagination_extra_list.append(f"q={self.q}")
+
+        self.is_filter_liked = "liked" in self.request.GET
+        if self.is_filter_liked:
+            self.bootstrap_pagination_extra_list.append("liked=1")
+
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         qs = super().get_queryset()
-        q = self.request.GET.get("q", "").strip()
-        if q:
-            qs = qs.filter(title__icontains=q)
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
 
-        if "liked" in self.request.GET:
+        if self.is_filter_liked:
             qs = qs.filter(liked_user_set=self.request.user)
 
         if self.request.user.is_authenticated:
@@ -42,8 +58,11 @@ class VideoListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(object_list=object_list, **kwargs)
-        if "liked" in self.request.GET:
-            context_data["bootstrap_pagination_extra"] = "liked=1"
+        context_data["bootstrap_pagination_extra"] = "&".join(
+            self.bootstrap_pagination_extra_list
+        )
+        context_data["q"] = self.q
+        context_data["is_filter_liked"] = self.is_filter_liked
         return context_data
 
 
@@ -145,6 +164,11 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
     template_name = "form.html"
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["form_title"] = "새로운 댓글 등록"
+        return context_data
 
     def form_valid(self, form):
         comment = form.save(commit=False)

@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 
-from . import views_cbv as views
+# from . import views_cbv as views
+from . import views_fbv as views
 
 app_name = "catube"
 
