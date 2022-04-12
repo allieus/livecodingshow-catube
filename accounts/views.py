@@ -32,11 +32,14 @@ class MyLoginView(LoginView):
     def form_valid(self, form):
         before = form.get_user().last_login
         response = super().form_valid(form)
-        diff_minutes = int((timezone.now() - before).total_seconds() // 60)
-        if diff_minutes == 0:
-            welcome_message = "방금 전에도 로그인하셨었는데 ;-)"
+        if before is None:
+            welcome_message = "첫 로그인이시네요. 반갑습니다. :-)"
         else:
-            welcome_message = f"{diff_minutes}분 만이네요. :-)"
+            diff_minutes = int((timezone.now() - before).total_seconds() // 60)
+            if diff_minutes == 0:
+                welcome_message = "방금 전에도 로그인하셨었는데 ;-)"
+            else:
+                welcome_message = f"{diff_minutes}분 만이네요. :-)"
 
         messages.success(
             self.request, f"{form.get_user().username}님. {welcome_message}"
