@@ -6,28 +6,26 @@
         <source src="{{ video.file.url }}" />
     </video>
 
-    <div class="d-xl-flex justify-content-between pt-3">
-        <div>
-            <h4>{{ video.title }}</h4>
-            <div>조회수 {{ video.view_count|intcomma }}회</div>
-        </div>
-        <div>
-            {% is_liked_user video request.user as is_liked %}
-            {% if is_liked %}
-                <a href="{% url "catube:video_like" pk=video.pk action="dislike" %}" class="btn btn-outline-danger">
-                    <span class="fa fa-heart text-danger"></span> 좋아요
-                </a>
-            {% else %}
-                <a href="{% url "catube:video_like" pk=video.pk action="like" %}" class="btn btn-outline-secondary">
-                    <span class="fa fa-heart-o text-secondary"></span> 좋아요
-                </a>
-            {% endif %}
+    <div class="py-3">
+        <h4>{{ video.title }}</h4>
+        <div>조회수 {{ video.view_count|intcomma }}회</div>
+    </div>
+    <div>
+        {% is_liked_user video request.user as is_liked %}
+        {% if is_liked %}
+            <a href="{% url "catube:video_like" pk=video.pk action="dislike" %}" class="btn btn-outline-danger">
+                <span class="fa fa-heart text-danger"></span> 좋아요
+            </a>
+        {% else %}
+            <a href="{% url "catube:video_like" pk=video.pk action="like" %}" class="btn btn-outline-secondary">
+                <span class="fa fa-heart-o text-secondary"></span> 좋아요
+            </a>
+        {% endif %}
 
-            {% if user == video.author %}
-                <a href="{% url 'catube:video_edit' video.pk %}" class="btn btn-danger">수정</a>
-                <a href="{% url 'catube:video_delete' video.pk %}" class="btn btn-outline-danger">삭제</a>
-            {% endif %}
-        </div>
+        {% if user == video.author %}
+            <a href="{% url 'catube:video_edit' video.pk %}" class="btn btn-danger">수정</a>
+            <a href="{% url 'catube:video_delete' video.pk %}" class="btn btn-outline-danger">삭제</a>
+        {% endif %}
     </div>
 
     <hr />
