@@ -4,4 +4,5 @@ pillow~=9.1.0
 yt-dlp~=2022.4.0
 requests~=2.27.0
 django-debug-toolbar~=3.2.0
-
+pytest~=7.1.0
+pytest-django~=4.5.0
