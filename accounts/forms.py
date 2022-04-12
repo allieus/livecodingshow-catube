@@ -1,11 +1,17 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from accounts.models import Profile
 from accounts.validators import phone_number_validator
 
 
 User = get_user_model()
+
+
+class SignupForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
 
 
 class ProfileForm(forms.ModelForm):

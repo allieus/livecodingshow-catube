@@ -1,17 +1,16 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, TemplateView
 
-from accounts.forms import ProfileForm
+from accounts.forms import ProfileForm, SignupForm
 from accounts.mixins import LoginRequiredMixin
 
 
 class SignupView(CreateView):
-    form_class = UserCreationForm
+    form_class = SignupForm
     template_name = "form.html"
     success_url = settings.LOGIN_URL
 
